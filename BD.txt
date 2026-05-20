@@ -1,0 +1,111 @@
+Pour créer une base de données MySQL avec une table contenant un identifiant (id), des données (data), 
+ainsi qu'une date et une heure (date_heure), voici les étapes à suivre :
+
+1. Créer la base de données
+CREATE DATABASE ma_base_de_donnees;
+2. Utiliser la base de données
+USE ma_base_de_donnees;
+3. Créer la table avec les colonnes suivantes :
+id : Clé primaire auto-incrémentée
+data : Une colonne pour stocker des informations (ex: texte)
+date_heure : Une colonne pour stocker la date et l'heure
+CREATE TABLE informations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data VARCHAR(255) NOT NULL,
+    date_heure DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+4. Insérer des données dans la table
+INSERT INTO informations (data) VALUES ('Exemple de donnée');
+
+5. Afficher les données de la table
+SELECT * FROM informations;
+
+Si tu veux vérifier les colonnes et la structure d'une table (pour être sûr du nom) :
+DESCRIBE clients; ou SHOW COLUMNS FROM clients;
+
+Explication :
+AUTO_INCREMENT sur id permet une incrémentation automatique des identifiants.
+VARCHAR(255) pour data permet de stocker du texte.
+DATETIME DEFAULT CURRENT_TIMESTAMP pour date_heure permet d'ajouter automatiquement la date et l'heure lors de l'insertion.
+
+Si tu veux ajouter automatiquement la date et l'heure de mise à jour (date_maj), tu peux modifier la table ainsi :
+ALTER TABLE informations ADD COLUMN date_maj DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+Si chaque client a un id, tu peux sélectionner un client précis avec :
+SELECT * FROM clients WHERE id = 1;
+
+Par exemple, si tu veux récupérer un client avec un nom spécifique :
+SELECT * FROM clients WHERE nom = 'Dupont';
+
+Si plusieurs résultats sont possibles mais que tu veux seulement une ligne, ajoute LIMIT 1 :
+SELECT * FROM clients WHERE nom = 'Dupont' LIMIT 1;
+
+Si tu veux la dernière ligne insérée, en supposant que id est auto-incrémenté :
+SELECT * FROM clients ORDER BY id DESC LIMIT 1;
+
+Si tu veux trouver une table contenant un mot spécifique :
+SHOW TABLES LIKE '%clients%';
+
+Si tu veux voir toutes les tables avec plus de détails :
+SELECT table_name FROM information_schema.tables WHERE table_schema = 'nom_de_ta_base';
+
+-- Crée la base de données si elle n'existe pas
+CREATE DATABASE IF NOT EXISTS `php-app`;
+
+-- Utilise la base de données
+USE `php-app`;
+
+-- Crée la table users avec les colonnes demandées si la BD et la table users n'existent pas:
+CREATE DATABASE IF NOT EXISTS php-app;
+USE php-app;
+
+CREATE TABLE IF NOT EXISTS `users` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    profession VARCHAR(100),
+    sexe VARCHAR(10),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS `clients` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    profession VARCHAR(100),
+    sexe enum('homme','femme','autre') NOT NULL,
+    commentaire text NOT NULL,
+    heure_inscription DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Crée la table users avec les colonnes demandées si la BD et la table users existe par conséquent on va juste ajouter 
+les colonnes à la table users:
+
+ALTER TABLE users
+ADD prenom VARCHAR(100),
+ADD email VARCHAR(150),
+ADD profession VARCHAR(100),
+ADD sexe VARCHAR(10),
+ADD DATETIME DEFAULT CURRENT_TIMESTAMP,
+ADD DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+DESCRIBE users;
+SHOW tables;
+
+Supprimer les données de toutes les tables (TRUNCATE)
+Vider toutes les lignes de la table users sans supprimer la table :
+
+TRUNCATE TABLE users;
+
+Supprimer les données sans réinitialiser l'auto-incrément (DELETE)
+
+DELETE FROM users;
+
+
+
+
+
+
